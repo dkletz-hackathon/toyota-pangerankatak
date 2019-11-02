@@ -7,11 +7,7 @@ router.get(
   "/",
   async (req, res, next) => {
     try {
-      let parkinglots = await ParkingLot.find()
-
-      for (let i = 0; i < parkinglots.length; i++) {
-        parkinglots["id"] = parkinglots["_id"];
-      }
+      let parkinglots = await ParkingLot.find();
 
       res.json({
         success: true,

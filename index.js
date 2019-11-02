@@ -22,4 +22,5 @@ app.use(bodyParser.json());
 // import all routes
 app.use('/parking', parkingRoutes);
 
-app.listen(3000, () => console.log("App is listening at port 3000!"))
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => console.log("App is listening at port 3000!"))

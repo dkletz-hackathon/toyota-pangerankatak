@@ -29,6 +29,10 @@ const ParkingLotSchema = new Schema({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+    required: true,
+  },
   longitude: {
     type: String,
     required: true,

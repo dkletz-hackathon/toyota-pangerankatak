@@ -7,11 +7,15 @@ router.get(
   "/",
   async (req, res, next) => {
     try {
-      let parkinglots = await ParkingLot.find();
+      let parkinglots = await ParkingLot.find().lean();
+      const newParkingLots = parkinglots.map(parkinglot => ({
+        ...parkinglot,
+        id: parkinglot._id,
+      }))
 
       res.json({
         success: true,
-        data: parkinglots,
+        data: newParkingLots,
       })
     } catch(err) {
       console.log("[Error][Parking] " + err)
@@ -51,8 +55,10 @@ router.patch(
       }
 
       let parkingLot = await ParkingLot.findById(parkingLotId);
-      for (let i = 0; i < parkingLot["spaces"].length; i++) {
-        parkingLot["spaces"][i]["empty"] = newStatusMap[parkingLot["spaces"][i]["_id"]]
+      if (parkingLot["spaces"]) {
+        for (let i = 0; i < parkingLot["spaces"].length; i++) {
+          parkingLot["spaces"][i]["empty"] = newStatusMap[parkingLot["spaces"][i]["_id"]]
+        }
       }
 
       parkingLot = await parkingLot.save()
